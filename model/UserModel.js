@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import hashedPasswordMiddleware from '../middleware/hashedPassword.js';
+
 
 const Schema = mongoose.Schema;
 
@@ -17,9 +17,16 @@ const userSchema = new Schema({
         type: String,
         require: true,
         minlength: 6,
-    }
+    },
+    access_token: {
+        type: String,
+        default: null,
+    },
+    
+},{
+    timestamps:true
 });
 
-userSchema.pre('save', hashedPasswordMiddleware)
+
 export default mongoose.model("User", userSchema);
 // user
