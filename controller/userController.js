@@ -70,3 +70,27 @@ export const loginUser = async (req, res) =>{
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+export const logOutUser = async(req, res)=>{
+    try {
+        const accessToken = req.cookies.accessToken;
+        if(!accessToken) return res.sendStatus(204)
+
+        const user = await UserModel.find({
+            where:{
+                access_token: accessToken
+            }
+        })
+        if(!user[0]) return res.sendStatus(204);
+        const userId = user[0];
+        await UserModel.updateOne({access_token:0},{
+            where:{
+                _id : userId
+            }
+        })
+        res.clearCookie('accesToken')
+        return res.sendStatus(200)
+    } catch (error) {
+        
+    }
+}

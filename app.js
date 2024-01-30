@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors'
-import router from "./routes/userRouter.js";
+import userRouter from "./routes/userRouter.js";
+import blogRouter from "./routes/blogRouter.js"
 
 
 dotenv.config();
@@ -10,7 +11,8 @@ const app = express();
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/users', router)
+app.use('/api/users', userRouter)
+app.use('/api/blogs', blogRouter)
 
 try {
     await mongoose

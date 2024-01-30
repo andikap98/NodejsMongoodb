@@ -1,0 +1,15 @@
+###
+GET http://localhost:5000/api/blogs/
+
+###
+GET http://localhost:5000/api/blogs/65b8693fb8501ba7f924fe5e
+###
+POST http://localhost:5000/api/blogs/add
+Content-Type: application/json
+
+    {
+        "title" : "fdf",
+        "description" : "dfdwdasdsafsdfsdfsdfsdfdsfsd",
+        "image" : "dfdf",
+        "user" : "xcxdfdf"
+    }

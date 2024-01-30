@@ -1,6 +1,6 @@
 ###
 GET   http://localhost:5000/api/users/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI3MzMzNzU4ZjZjOGU1OTAwZGZiM2YiLCJuYW1lIjoic2F0cmlvIiwiZW1haWwiOiJzYXRyaW9AZ21haWwuY29tIiwiaWF0IjoxNzA2NTE0MzcyLCJleHAiOjE3MDY2MDA3NzJ9.Z0PGlS3YJ0lH13Oj7j2MgtiJonIqLxIfGlfVzP2p884
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI3MzMzNzU4ZjZjOGU1OTAwZGZiM2YiLCJuYW1lIjoic2F0cmlvIiwiZW1haWwiOiJzYXRyaW9AZ21haWwuY29tIiwiaWF0IjoxNzA2NTg0MjkzLCJleHAiOjE3MDY2NzA2OTN9.H1JHfKZllj7w35XsHGjKJoxTKJpKrxZKJ1KvID2JifY
 
 ###
 POST http://localhost:5000/api/users/signup
@@ -20,5 +20,7 @@ Content-Type: application/json
         "email": "satrio@gmail.com",
         "password":"sandi123"
     }
+###
+DELETE http://localhost:5000/api/users/logout
 
 
