@@ -8,8 +8,17 @@ POST http://localhost:5000/api/blogs/add
 Content-Type: application/json
 
     {
-        "title" : "fdf",
+        "title" : "1222",
         "description" : "dfdwdasdsafsdfsdfsdfsdfdsfsd",
         "image" : "dfdf",
         "user" : "xcxdfdf"
+    }
+
+###
+PUT http://localhost:5000/api/blogs/update/65b8693fb8501ba7f924fe5e
+Content-Type: application/json
+
+    {
+        "title" : "1222",
+        "description" : "dfdwdasdsafsdfsdfsdfsdfdsfsd",
     }
