@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import BlogModel from "../model/BlogModel.js";
 import UserModel from "../model/UserModel.js";
 
@@ -30,7 +31,16 @@ export const getBlogByID = async (req, res) => {
 }
 
 export const addBlog = async (req, res) => {
-    const { title, description, image, user } = req.body
+    const { title, description, image, user } = req.body;
+    const existingUser = await UserModel.findById(user);
+    try {
+       
+        if(!existingUser){
+            return res.status(400).json({message:"Unable to find user by this ID"})
+        }
+    } catch (error) {
+        
+    }
     try {
         if (description.length <= 20) {
             return res.status(422).json({ message: "Description is too short" });
@@ -42,7 +52,12 @@ export const addBlog = async (req, res) => {
             user
         });
 
-        await blog.save();
+        const session =  await mongoose.startSession();
+        session.startTransaction();
+        await blog.save({session});
+        existingUser.blogs.push(blog)
+        await existingUser.save({session})
+        await session.commitTransaction();
         return res.status(201).json({ message: "Created Blog Successfull" })
     } catch (error) {
         console.error("Error adding blog:", error);
@@ -51,26 +66,45 @@ export const addBlog = async (req, res) => {
 }
 
 
-export const updateBlog = async (req, res) => {
+export const updateBlog = async(req, res, next)=>{
+    const {title, description} = req.body;
     const id = req.params.id;
-    const { title, description } = req.body;
+
 
     try {
-        // Use the correct syntax for findOneAndUpdate
-        const blogUpdate = await UserModel.findByIdAndUpdate(id,        // Provide an object with the search criteria
-            { title, description },  // Provide an object with the fields to update
-            { new: true }  // Use the { new: true } option to return the updated document
-        );
 
-        if (!blogUpdate) {
-            return res.status(404).json({
-                message: 'Data tidak ditemukan'
-            });
+        if(description.length<=20){
+            return res.status(422).json({ message: "Description is too short" });
         }
-
-        return res.status(200).json({ message: 'Update Blog Successful', updatedBlog: blogUpdate });
+        const blog = await BlogModel.findByIdAndUpdate(id,{
+            title,
+            description
+        })
+        if(!blog){
+        return res.status(404).json({message:"Data Blog tidak ditemukan"})
+        }
+        return res.status(201).json({blog})  
     } catch (error) {
-        console.error(error);  // Log the error for debugging purposes
-        return res.status(500).json({ message: 'Internal Server Error' });
+        
     }
-};
+
+}
+
+export const deleteBlog = async(req, res)=>{
+    const id = req.params.id
+    try {
+        const deleteData = await BlogModel.findById(id).populate("user")
+        if(!deleteData){
+            return res.status(404).json({message:"Data Blog tidak ditemukan"})
+        }
+        if(deleteData.user){
+            await deleteData.user.blogs.pull(deleteData._id)
+            await deleteData.user.save()
+        }
+        await BlogModel.findByIdAndDelete(id)
+        return res.status(200).json({ message: "Delete Blog Successful" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}

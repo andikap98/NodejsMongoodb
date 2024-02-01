@@ -27,7 +27,8 @@ export const signUp = async (req, res) => {
         const user = new UserModel({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            blogs: [],
         });
         user.save()
         return res.status(201).json({ message: "Created User Successfull" })

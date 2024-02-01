@@ -22,10 +22,19 @@ const userSchema = new Schema({
         type: String,
         default: null,
     },
-    
+    blogs:[{type: mongoose.Types.ObjectId, ref:"Blog", require:true}]
 },{
     timestamps:true
 });
+
+userSchema.pre('remove', async(next)=>{
+    try {
+        await BlogModel.deleteMany({_id:{ $in: this.blogs}})
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 export default mongoose.model("User", userSchema);

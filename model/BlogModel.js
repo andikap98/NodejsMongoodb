@@ -9,6 +9,7 @@ const blogSchema = new Schema({
     },
     description:{
         type: String,
+        minlength:20,
         required: true,
     },
     image: {
@@ -16,7 +17,8 @@ const blogSchema = new Schema({
         required: true
     },
     user :{
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref:"User",
         required: true
     }
 })

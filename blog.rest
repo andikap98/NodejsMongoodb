@@ -1,6 +1,5 @@
 ###
 GET http://localhost:5000/api/blogs/
-
 ###
 GET http://localhost:5000/api/blogs/65b8693fb8501ba7f924fe5e
 ###
@@ -8,17 +7,21 @@ POST http://localhost:5000/api/blogs/add
 Content-Type: application/json
 
     {
-        "title" : "1222",
-        "description" : "dfdwdasdsafsdfsdfsdfsdfdsfsd",
+        "title" : "My BLOG",
+        "description" : "This Is My Blogs, my nama adam im from gresik",
         "image" : "dfdf",
-        "user" : "xcxdfdf"
+        "user" : "65bb091ae6acebc0bc041046"
     }
 
 ###
-PUT http://localhost:5000/api/blogs/update/65b8693fb8501ba7f924fe5e
+PATCH http://localhost:5000/api/blogs/edit/65bb5e1689c2af02df12f1fe
 Content-Type: application/json
 
     {
-        "title" : "1222",
-        "description" : "dfdwdasdsafsdfsdfsdfsdfdsfsd",
+        "title" : "400",
+        "description" : "dfsgdfgdfgergrdtgdfbgfghfghfghfgh"
     }
+
+
+###
+DELETE  http://localhost:5000/api/blogs/65bb6690dd685847a225cf55

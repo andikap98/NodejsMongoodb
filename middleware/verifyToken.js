@@ -21,14 +21,3 @@ export const verifyToken = (req,res,next) =>{
         next();
     });
 };
-
-export const logLoginUser = async(req,res,next)=>{
-
-    const loggedInUser = {
-         email: req.email
-    }
-    console.log(loggedInUser)
-    res.json({
-        userLogin: loggedInUser
-    });
-}
